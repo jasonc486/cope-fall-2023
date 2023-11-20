@@ -7,7 +7,7 @@ import math
 
 """Input Parameters"""
 
-Mach_e = 5                      #Mach
+Mach_e = 5.                      #Mach
 payload_mass = 907              #kg
 k = 1.3
 R = 924                         #J/(kg*K)
@@ -17,7 +17,7 @@ g_0 = 9.81                       #m/s^2
 r_earth = 6378100               #m
 r_char = 6940                   #m
 
-payload_frac = 0.2
+payload_frac = 0.05
 
 
 """End of Input Parameters"""
@@ -64,14 +64,14 @@ impulse = Isp * mass_prop*g_0
 burn_time = impulse / (mdot*v_exit)
 
 #Print the variables
-print("Chamber Pressure = ","%.4g" % P_chamber, "atm")
-print("Throat Diameter = ","%.4g" % D_throat, "m")
-print("Exit to Throat Area Ratio = ","%.4g" % A_Ratio)
-print("Mass flow rate = ","%.4g" % mdot, "kg/s")
-print("Exit Velocity = ","%.4g" % v_exit, "m/s")
-print("Exit Temperature = ","%.4g" % T_e, "K")
-print("Specific Impulse = ","%.4g" % Isp, "s")
-print("Burn Time = ","%.4g" % burn_time, "s")
+print("Chamber Pressure = ","%.6g" % P_chamber, "atm")
+print("Throat Diameter = ","%.6g" % D_throat, "m")
+print("Exit to Throat Area Ratio = ","%.6g" % A_Ratio)
+print("Mass flow rate = ","%.6g" % mdot, "kg/s")
+print("Exit Velocity = ","%.6g" % v_exit, "m/s")
+print("Exit Temperature = ","%.6g" % T_e, "K")
+print("Specific Impulse = ","%.6g" % Isp, "s")
+print("Burn Time = ","%.6g" % burn_time, "s")
 
 """Part 2: Vertical Trajectory"""
 
@@ -79,8 +79,6 @@ print("Burn Time = ","%.4g" % burn_time, "s")
 def gravityAccel(alt):
         gravity = g_0 / ((1 + alt/r_earth)**2)
         return gravity
-
-        
 
 #Function for the pressure of air at altitude
 def airPressure(alt):
@@ -93,7 +91,7 @@ def getThrust(pressure):
                 (P_0 - pressure) * 1000 * A_throat * A_Ratio
 
 #Calculate time step
-num_steps = 10**5
+num_steps = 10**6
 time_step = burn_time / num_steps
 
 #Marching Variables
@@ -181,19 +179,19 @@ z_max = (z_r[-1]+(end_burn_vel**2)*(1+z_r[-1]/r_earth)/2/g_0) / 1000 #km
 g_g0_ratio = gravityAccel(z_max*1000) / g_0
 print("""____Part 2: Vertical Trajectory____""", '\n')
 print("Number of steps", num_steps)
-print('a/g0 at end of burn =',"%.4g" % a_g0_ratio)
-print('Speed at end of burn =',"%.4g" % end_burn_vel,'m/s')
-print('Altitude at end of burn =',"%.4g" % end_burn_alt,'km')
-print("V_final/V_escape = ","%.4g" % end_vel_esc_vel_ratio)
-print("g/g0 at final altitude =","%.4g" % g_g0_ratio)
+print('a/g0 at end of burn =',"%.6g" % a_g0_ratio)
+print('Speed at end of burn =',"%.6g" % end_burn_vel,'m/s')
+print('Altitude at end of burn =',"%.6g" % end_burn_alt,'km')
+print("V_final/V_escape = ","%.6g" % end_vel_esc_vel_ratio)
 
 if(end_vel_esc_vel_ratio >= 1):
         hyper_vel = np.sqrt(end_burn_vel**2 - 2 * g_0 * r_earth /
                             (1 + z_r[-1] / r_earth))
         print("\nThe rocket escapes Earth.")
-        print("The hyperbolic excess speed is:", "%.4g" % hyper_vel, 'm/s' )
+        print("The hyperbolic excess speed is:", "%.6g" % hyper_vel, 'm/s' )
 else:
         print("\nThe rocket fails to escape Earth.")
-        print("The maximum altitude reached is:", "%.4g" % z_max, 'km')
+        print("The maximum altitude reached is:", "%.6g" % z_max, 'km')
+        print("g/g0 at final altitude =","%.6g" % g_g0_ratio)
 
 plt.show()
