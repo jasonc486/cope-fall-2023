@@ -116,8 +116,7 @@ for i in range(num_steps):
         v_r.append(v_r_now)
 
         #Calculate altitude
-        z_r_now = z_r[i] + v_r[i] * time_step +\
-                1/2 * a_r[i] * time_step**2
+        z_r_now = z_r[i] + v_r[i] * time_step
         z_r.append(z_r_now)
 
         #Calculate change in mass
